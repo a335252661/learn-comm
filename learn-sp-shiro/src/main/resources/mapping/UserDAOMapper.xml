@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cld.learnspshiro.dao.UserDAO" >
+
+    <select id="queryid" resultType="java.lang.String">
+        select '1'
+    </select>
+
+    <insert id="saveUser" parameterType="cn.cld.learnspshiro.entity.User" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_user (`username`, `password`, `salt`) VALUES ( #{username} , #{password} , #{salt})
+    </insert>
+
+    <select id="test2" resultType="cn.cld.learnspshiro.entity.User">
+<!--        select '2'-->
+
+        select * from t_user where id=1
+
+    </select>
+
+    <select id="queryByName" parameterType="String" resultType="cn.cld.learnspshiro.entity.User">
+        select * from t_user where username=#{username}
+    </select>
+
+
+    <select id="queryRoleByUserName" parameterType="String" resultType="com.alibaba.fastjson.JSONObject">
+        SELECT
+                u.*,
+                ur.*,
+                r.*
+        FROM
+                t_user u
+                        LEFT JOIN t_user_role ur ON u.id = ur.userid
+                        LEFT JOIN t_role r ON ur.roleid = r.id
+        where username = #{username}
+    </select>
+
+    <select id="queryPermsByRoleName" parameterType="String" resultType="com.alibaba.fastjson.JSONObject">
+        SELECT
+                r.id,
+                r.`name`,
+                p.`name` permsname
+        FROM
+                t_role r
+                        LEFT JOIN t_role_perms rps ON r.id = rps.roleid
+                        LEFT JOIN t_pers p ON rps.permsid = p.id
+        WHERE
+                r. NAME = #{roleName}
+    </select>
+
+</mapper>

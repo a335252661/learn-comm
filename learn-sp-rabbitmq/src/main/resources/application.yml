@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: rabbitmq-springboot
+  rabbitmq:
+    host: 192.168.106.128
+    port: 5672
+    username: emsusr
+    password: emsusr
+    virtual-host: /ems
+    # 打开消息确认机制 ，消息发送到MQ那端之后，MQ会回一个确认收到的消息给我们。
+    publisher-confirm-type: correlated
+    # 生产者的发送消息处理好了之后
+    #    MQ可能出现两个问题： 设置消息投递失败的策略，，有两种策略：自动删除或返回到客户端。
+    #    消息找不到对应的Exchange。
+    #    找到了Exchange但是找不到对应的Queue。
+    #  MQ消息发送失败策略，打开消息返回客户端
+    publisher-returns: true
+    template:
+      mandatory: true
+
+    # 消费者，开启手动确认消息
+    listener:
+      simple:
+        acknowledge-mode: manual

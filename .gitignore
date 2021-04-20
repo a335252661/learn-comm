@@ -1,0 +1,7 @@
+# Project exclude paths
+/learn-docker-componse/target/
+/learn-mv-rabbitmq/target/
+/learn-mv-shiro/target/
+/learn-sp-rabbitmq/target/
+/learn-sp-shiro/target/
+/lesrn-sp-elasticserach/target/
