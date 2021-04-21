@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: springboot-docker-01
+
+server:
+  port: 8081

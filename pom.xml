@@ -23,7 +23,8 @@
         <module>learn-mv-shiro</module>
         <module>learn-sp-rabbitmq</module>
         <module>learn-sp-01-test</module>
-<!--        <module>learn-docker</module>-->
+        <module>learn-docker-01</module>
+        <!--        <module>learn-docker</module>-->
     </modules>
 
     <properties>
