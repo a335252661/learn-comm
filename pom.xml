@@ -18,13 +18,25 @@
 
     <packaging>pom</packaging>
     <modules>
+        <module>learn-docker-01</module>
+        <module>learn-mv-annotation</module>
         <module>learn-mv-01-test</module>
         <module>learn-mv-rabbitmq</module>
         <module>learn-mv-shiro</module>
-        <module>learn-sp-rabbitmq</module>
         <module>learn-sp-01-test</module>
-        <module>learn-docker-01</module>
-        <!--        <module>learn-docker</module>-->
+        <module>learn-sp-02-annotation</module>
+        <module>learn-sp-03-code</module>
+        <module>learn-sp-04-jwt</module>
+        <module>learn-sp-05-rabbitmq</module>
+        <module>learn-sp-06-security</module>
+        <module>learn-sp-07-sharding</module>
+        <module>learn-sp-08-shiro</module>
+        <module>learn-sp-09-shiro-k</module>
+        <module>lesrn-sp-10-elasticserach</module>
+        <module>learn-sp-11-easycode</module>
+        <module>learn-sp-12-dmdb</module>
+        <module>learn-sp-13-oracle</module>
+        <module>learn-sp-14-manydatasources</module>
     </modules>
 
     <properties>

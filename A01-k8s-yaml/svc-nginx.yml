@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-nginx-01 #svc的名字
+  namespace: dev
+#  labels: #给Deployment打标签
+#    version: "3.0"
+#    env: "test"
+spec:
+  clusterIP: 10.1.106.56 # 指定svc的ip ， 也可以不指定，会自动分配
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80 #pod暴露出来的端口
+  selector:
+    run: nginx-dep # pod 打上的标签
+  type: ClusterIP #只能在集群中访问
+
+

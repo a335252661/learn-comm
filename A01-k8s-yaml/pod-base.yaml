@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-base #pod的名字
+  namespace: dev
+  labels: #给pod打标签
+    env: "test"
+spec:
+  containers:
+    - name: name-nginx
+      image: nginx:1.17.1
+    - name: name-busybox
+      image: busybox:1.30

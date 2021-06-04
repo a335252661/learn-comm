@@ -1,0 +1,43 @@
+server:
+  port: 8040
+# DataSource Config
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/sp_test?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+
+---
+
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-dep
+  namespace: dev
+  labels: #给Deployment打标签
+    version: "3.0"
+    env: "test"
+spec:
+  replicas: 3
+  selector:
+    matchLables:
+      run: nginx-dep  #通过选择器，Deployment知道自己管理的pod都是 带run=nginx-dep 这个标签的
+  template:
+    metadata:
+      labels:
+        run: nginx-dep #表示运行的pod都打上 run=nginx-dep 这个标签
+    spec:
+      containers:
+        - name: nginx-cld
+          image: nginx:1.17.1
+          ports:
+            - containerPort: 80
+
+

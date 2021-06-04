@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-nginx-taleration #pod的名字
+  namespace: dev
+  labels: #给pod打标签
+    env: "test"
+spec:
+  restartPolicy: Always   # pod的重启策略 ， never表示不重启
+  containers:
+    - name: container-nginx-001
+      image: nginx:1.17.1
+      imagePullPolicy: IfNotPresent #本地没有就从远程仓库拉取
+      ports:
+        - name: port-name-nginx
+          containerPort: 80
+          protocol: TCP
+  # 我们在node上打的污点
+  # kubectl taint nodes node1 mykey=test:NoExecute
+  tolerations: # 添加容忍
+    - key: "mykey"
+      operator: "Equal"
+      value: "test"
+      effect: "NoExecute"
