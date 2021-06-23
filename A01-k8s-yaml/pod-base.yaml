@@ -6,8 +6,95 @@ metadata:
   labels: #给pod打标签
     env: "test"
 spec:
+  restartPolicy: Always   # pod的重启策略 ， never表示不重启
   containers:
     - name: name-nginx
       image: nginx:1.17.1
+      imagePullPolicy: IfNotPresent #本地没有就从远程仓库拉取
+      ports:
+        - name: port-name-nginx
+          containerPort: 80
+          protocol: TCP
+#          hostIP:     # 主机ip
+#          hostPort:   # 容器映射的主机端口
+      resources:
+        limits:
+          cpu: "2" #cpu限制
+          memory: "10Gi" #最多分配10g内存
+        requests:
+          cpu: "1" #最少需要分配一核
+          memory: "10Mi" #最少需要10兆内存
+      lifecycle:  # 执行钩子函数
+        postStart: # 在容器启动成功之后执行的命令 ， 修改nginx首页的内容
+          exec:
+            command: ["/bin/sh" , "-c" , "echo postStart ... > /usr/share/nginx/html/index.html"]
+        preStop: # 在容器停止之前 停止nginx服务
+          exec:
+            command: ["/usr/sbin/nginx" , "-s" , "quit"]
+      # spec.containers[0].livenessProbe.tcpSocket: Forbidden: may not specify more than 1 handler type
+      livenessProbe:  #存活性探测方式1，检测实例是否是正常运行，如果不是就会重启
+        tcpSocket:  #存活性探测方式1 监听端口的方式
+          port: 80  #监听8080端口，容器只暴露了80端口，所以检测失败，容器重启
+#        httpGet: #存活性探测方式2 发送get请求的方式，来检测实例是否正常运行 ，其实就是访问 http://127.0.0.1:80/hello
+#          scheme: HTTP
+#          host: 127.0.0.1
+#          port: 80
+#          path: /hello
+        initialDelaySeconds: 2  # 容器启动后等待多少秒执行第一次探测
+        timeoutSeconds: 10 # 探测超时时间，默认是1秒
+        periodSeconds: 5 # 探测的评率，默认是10秒，最小是1秒
     - name: name-busybox
       image: busybox:1.30
+      command: ["/bin/sh","-c","touch /tmp/hello.txt; while true ; do /bin/echo $(date +%T) >> /tem/hello.txt; sleep 3;done;"]
+      env:
+        - name: "username"
+          value: "admin"
+        - name: "password"
+          value: "123"
+      livenessProbe: # 存活性探测，检测实例是否是正常运行，如果不是就会重启
+        exec:   #存活性探测方式3 执行命令的方式
+#          command: ["/bin/cat" , "/tmp/hello2.txt"] # 执行一个查看文件的命令，因为没有这个文件，容器就会重启
+          command: ["/bin/ls" , "/tmp"] # 执行一个查看文件的命令
+  initContainers: # 初始化容器，只有等待初始化容器启动完成，我们的应用容器才能启动
+    - name: init-busy-box
+      image: busybox:1.30
+      # 表示一直ping 这个地址，ping通了，才成功启动
+#      command: ['sh','-c','until ping 192.168.109.202 -c 1 ; do echo waiting .......;sleep 2 ; done ;']
+      command: ['sh','-c','touch /tmp/hello22.txt;']
+  # 定向调度 两种形式  nodeName  nodeSelector
+#  nodeName: node1 # 表示pod直接调度到node1节点上
+  # 基于node标签的调度，首先node打上标签  key=cld
+#  nodeSelector:
+#    key: cld
+  # 亲和性调度，
+  affinity:
+#    nodeAffinity: # node亲和性
+#      requiredDuringSchedulingIgnoredDuringExecution: # 硬限制 ，如果找不到，直接调度失败，pending 状态
+#        nodeSelectorTerms:
+#          - matchExpressions: # 匹配标签的值在values之中都可以
+#              - key: key
+#                operator: In
+#                values: ["xxx" , "cld"]
+#      preferredDuringSchedulingIgnoredDuringExecution: # 软限制 ，如果找不到，会调度到其他节点
+#        - preference:
+#            matchExpressions:
+#              - key: key
+#                operator: In
+#                values: ["xxx" , "cld2"]
+#          weight: 1
+#    podAffinity: # pod亲和性
+#      requiredDuringSchedulingIgnoredDuringExecution: # 硬限制
+#        - labelSelector:
+#            matchExpressions: # 匹配某个 pod 的标签的值 在 ["cld" , "3.0"] 里面，那么当前这个pod就会调度到某个pod一起
+#              - key: version
+#                operator: In
+#                values: ["cld" , "3.0"]
+#          topologyKey: kubernetes.io/hostname # 以node节点为区分范围
+    podAntiAffinity: # pod 反亲和性 ， 匹配某个 pod 的标签的值，反而不会调度到这个pod所在的node
+      requiredDuringSchedulingIgnoredDuringExecution: # 硬限制
+        - labelSelector:
+            matchExpressions: #
+              - key: version
+                operator: In
+                values: ["cld" , "3.0"]
+          topologyKey: kubernetes.io/hostname # 以node节点为区分范围

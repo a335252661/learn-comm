@@ -62,4 +62,22 @@ public class ContentController {
         return list;
     }
 
+    //从es 里面获取数据
+    // localhost:8080/search/java/1/29
+    // localhost:8080/search/filebeat-7.6.2-2021.06.16-000001/message/provider/1/29
+    @GetMapping("/search/{index}/{key}/{keyword}/{page}/{size}")
+    public List<Map<String, Object>> searchEs(@PathVariable("index") String index,
+                                              @PathVariable("key") String key,
+                                              @PathVariable("keyword") String keyword,
+                                                @PathVariable("page") int page,
+                                                @PathVariable("size") int size) {
+        List<Map<String, Object>> list = null;
+        try { //String index ,String key ,  String keyword
+            list = contentService.searchES(index , key , keyword, page, size);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
 }

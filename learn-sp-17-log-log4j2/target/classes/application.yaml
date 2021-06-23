@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@127.0.0.1:1521:orcl
+    username: system
+    password: Acld7758258
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**Mapper.xml
+server:
+  port: 8017
+
+# 加载 log4j2的配置文件
+# 默认名log4j2-spring.xml，就省下了在application.yml中配置
+logging:
+  config: classpath:log4j2-spring.xml
+#  file:
+#    path: D:\logs\learn-sp-13-oracle

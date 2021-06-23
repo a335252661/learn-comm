@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-https
+  namespace: dev
+spec:
+  tls:
+    - hosts:
+        - nginx.cld.com
+        - tomcat.cld.com
+      secretName: tls-secret # 指定秘钥
+  rules:
+    - host: nginx.cld.com
+      http:
+        paths:
+#          - path: /xxx    #   nginx.cld.com/xxx -->  service-nginx:80
+          - path: /    #   nginx.cld.com/xxx -->  service-nginx:80
+            backend:
+              serviceName: service-nginx
+              servicePort: 80
+    - host: tomcat.cld.com
+      http:
+        paths:
+#          - path: /xxx
+          - path: /
+            backend:
+              serviceName: service-tomcat
+              servicePort: 8080
+
+

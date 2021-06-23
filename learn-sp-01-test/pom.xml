@@ -2,11 +2,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+<!--    <parent>-->
+<!--        <artifactId>learn-comm</artifactId>-->
+<!--        <groupId>cn.cld</groupId>-->
+<!--        <version>0.0.1-SNAPSHOT</version>-->
+<!--    </parent>-->
+
     <parent>
-        <artifactId>learn-comm</artifactId>
-        <groupId>cn.cld</groupId>
-        <version>0.0.1-SNAPSHOT</version>
+        <groupId>com.tencent.tsf</groupId>
+        <artifactId>spring-cloud-tsf-dependencies</artifactId>
+        <version>1.12.6-Finchley-RELEASE</version>
     </parent>
+
 <!--    <groupId>cn.cld</groupId>-->
     <artifactId>learn-sp-01-test</artifactId>
     <version>0.0.1-SNAPSHOT</version>

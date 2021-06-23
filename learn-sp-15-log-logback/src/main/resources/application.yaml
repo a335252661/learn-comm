@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@127.0.0.1:1521:orcl
+    username: system
+    password: Acld7758258
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**Mapper.xml
+server:
+  port: 8052
+
+# 加载 logback的配置文件
+logging:
+  config: classpath:logback-spring.xml

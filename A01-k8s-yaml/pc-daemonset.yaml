@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: pcds #DaemonSet的名字
+  namespace: dev
+  labels: #给ReplicaSet打标签
+    env: "ds001"
+spec:
+  revisionHistoryLimit: 3 # 保留历史版本，默认是10,我们镜像跟新一次就保留一个版本，这个就是为了版本回退做准备
+  updateStrategy: # 更新策略
+    type: RrollingUpdate
+    rollingUpdate: # 滚动跟新
+      maxUnavailable: 30% # 最大不可用状态的pod的值，可以是百分百也可以是整数
+  selector:
+    matchLabels:
+      app: ds-nginx-001
+
+  #容器模板pc-ds
+  template:
+    metadata:
+      labels:
+        app: ds-nginx-001
+    spec:
+      containers:
+        - name: contain-ds-nginx
+          image: nginx:1.17.1

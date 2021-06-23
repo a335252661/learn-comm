@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cld.learnsp13oracle.dao.QuerySomeMapper">
+
+    <!--查询单个-->
+    <select id="querydb" resultType="java.util.HashMap">
+        select * from T_USER
+    </select>
+</mapper>
+

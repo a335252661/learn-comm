@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pc-job #DaemonSet的名字
+  namespace: dev
+  labels: #给ReplicaSet打标签
+    env: "job001"
+spec:
+  completions: 4 # 指定job需要成功运行pod的次数
+  parallelism: 2 # 指定job在任意时刻并发运行的pod的数量，默认是1 表示会同时运行的pod的数量 总共会执行4个pod，同时执行两个，两个结束了，再执行两个，
+  activeDeadlineSeconds: 30 # 指定job运行的时间期限，超时将自动中止
+  backoffLimit: 6 # job失败后进行重试的次数
+  manualSelector: true # 是否可以使用selector选择器选择pod，默认是false
+  selector:
+    matchLabels:
+      app: job-busybox
+
+  #容器模板pc-ds
+  template:
+    metadata:
+      labels:
+        app: job-busybox
+    spec:
+      restartPolicy: Never # 从不重启
+      containers:
+        - name: contain-job-busybox
+          image: busybox:1.30
+          command: ["/bin/sh" , "-c" , "for i in 9 8 7 6 5 4 3 2 1 ; do echo $i ; sleep 2 ; done"]

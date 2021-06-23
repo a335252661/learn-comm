@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: # 元数据
+  name: pc-deployment #ReplicaSet的名字
+  namespace: dev
+  labels: #给ReplicaSet打标签
+    env: "dp001"
+spec:
+  ##  当前deployment 的设置信息
+  replicas: 3
+  revisionHistoryLimit: 4 # 保留历史版本，默认是10,我们镜像跟新一次就保留一个版本，这个就是为了版本回退做准备
+  paused: false # 暂停部署，默认就是false ， 表示创建出deployment之后马上就进行pod的部署
+  progressDeadlineSeconds: 600  #部署超时时间（s） 默认就是600秒
+  strategy:
+    type: RollingUpdate # 滚动跟新策略
+    rollingUpdate:
+      maxSurge: 30% # 最大额外可以存在的副本数，可以是百分百也可以是整数
+      maxUnavailable: 30% # 最大不可用状态的pod的值，可以是百分百也可以是整数
+  selector:
+    matchLabels:
+      app: dp-nginx-001
+
+  #容器模板
+  template:
+    metadata:
+      labels:
+        app: dp-nginx-001
+    spec:
+      containers:
+        - name: contain-nginx-002
+          image: nginx:1.17.1
+          ports:
+            - containerPort: 80

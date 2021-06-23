@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configMap
+  namespace: dev
+  labels: #给ReplicaSet打标签
+    env: "con-001"
+data:
+  info: | # info 就是key ，后面的就是value
+    username: admin
+    pass: 1234

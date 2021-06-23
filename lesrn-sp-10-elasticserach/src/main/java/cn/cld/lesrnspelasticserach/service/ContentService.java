@@ -150,4 +150,30 @@ public class ContentService {
 
         return list;
     }
+
+    public List<Map<String, Object>> searchES(String index ,String key ,  String keyword, int page, int size) throws Exception{
+        SearchRequest searchRequest = new SearchRequest(index);
+
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+
+        //分页
+        searchSourceBuilder.from(page);
+        searchSourceBuilder.size(size);
+
+        //精准匹配
+        TermQueryBuilder termQueryBuilder = QueryBuilders.termQuery(key, keyword);
+        searchSourceBuilder.query(termQueryBuilder);
+        searchSourceBuilder.timeout(new TimeValue(3000));
+        //执行搜索
+        searchRequest.source(searchSourceBuilder);
+        SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+
+        List<Map<String, Object>> list = new ArrayList<>();
+        for (SearchHit hit : searchResponse.getHits().getHits()) {
+            list.add(hit.getSourceAsMap());
+        }
+
+        return list;
+    }
+
 }

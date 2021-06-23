@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: volume-nfs
+  namespace: dev
+spec:
+  containers:
+    - name: containers-nginx
+      image: nginx:1.17.1
+      ports:
+        - containerPort: 80
+      volumeMounts:
+        - mountPath: /var/log/nginx  # nginx容器里面的日志位置，nginx会向里面写入日志
+          name: logs-volume
+    - name: containers-busybox
+      image: busybox:1.30
+      command: ["/bin/sh","-c","tail -f /logs/access.log"]
+      volumeMounts:
+        - mountPath: /logs
+          name: logs-volume
+  volumes:
+    - name: logs-volume # 声明存储卷的名字为 logs-volume
+      nfs:
+        path: /root/data/nfs # nfs服务器的存储目录
+        server: 192.168.196.129  # nfs服务器的地址

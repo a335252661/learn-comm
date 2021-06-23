@@ -1,0 +1,16 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: pc-hpa #ReplicaSet的名字
+  namespace: dev
+  labels: #给ReplicaSet打标签
+    env: "hpa001"
+spec:
+  minReplicas: 1 # 最小的pod数量
+  maxReplicas: 10 # 最大的pod数量
+  # cpu使用率指标 , 表示cpu使用率达到3%，我就要来增加pod来缓解cpu的压力了
+  targetCPUUtilizationPercentage: 3
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: run-nginx

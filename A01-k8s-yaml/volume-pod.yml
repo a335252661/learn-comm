@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: volume-pod-01
+  namespace: dev
+spec:
+  containers:
+    - name: contain-busybox01
+      image: busybox:1.30
+      command: ["/bin/sh","-c","while true ;do echo pod2 >> /root/out.txt ; sleep 10 ;done ;"]
+      volumeMounts:
+        - mountPath: /root/  # 表示容器内目录
+          name: volume-pvc-01 # 绑定的卷名 # 容器目录同步到 volume-pvc-01。pvc绑定的pv上，所以在pv的目录下可以看到日志
+  volumes:
+    - name: volume-pvc-01 # 定义的卷名
+      persistentVolumeClaim:
+        claimName: volume-pvc1  # pvc 的名字
+        readOnly: false
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: volume-pod-02
+  namespace: dev
+spec:
+  containers:
+    - name: contain-busybox02
+      image: busybox:1.30
+      command: ["/bin/sh","-c","while true ;do echo pod2 >> /root/out.txt ; sleep 10 ;done ;"]
+      volumeMounts:
+        - mountPath: /root/
+          name: volume-pvc-02 # 绑定的卷名
+  volumes:
+    - name: volume-pvc-02 # 定义的卷名
+      persistentVolumeClaim:
+        claimName: volume-pvc2  # pvc 的名字
+        readOnly: false

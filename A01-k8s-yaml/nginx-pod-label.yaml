@@ -1,0 +1,20 @@
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pod-label  #这个就是创建的pod的名字
+  namespace: dev
+  labels:
+    version: "3.0"
+    env: "test"
+spec:
+  containers:
+  - name: nginx-0520
+    image: nginx:1.17.1

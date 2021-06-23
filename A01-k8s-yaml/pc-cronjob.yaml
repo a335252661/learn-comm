@@ -1,0 +1,38 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: pc-cronjob #DaemonSet的名字
+  namespace: dev
+  labels: #给ReplicaSet打标签
+    env: "cronjob001"
+spec:
+  schedule:  "*/1 * * * *" # cron 定时调度的时间点 表示没分钟执行一次
+  concurrencyPolicy:  Allow # 用于定义前一次作业任务尚未完成时是否执行下一次任务 Allow,Forbid,Replace
+  failedJobsHistoryLimit: 1 # 为失败的任务执行保留的历史记录数 ， 默认为1
+  successfulJobsHistoryLimit: 3 # 为成功的任务执行保留的历史记录数，默认3
+  startingDeadlineSeconds: 20 # 启动作业错误的超时时长
+  jobTemplate:
+    metadata:
+      name: pc-my-job
+    spec:
+      # 这里定义的就是job的模板
+      completions: 1 # 指定job需要成功运行pod的次数
+      parallelism: 1 # 指定job在任意时刻并发运行的pod的数量，默认是1 表示会同时运行的pod的数量 总共会执行4个pod，同时执行两个，两个结束了，再执行两个，
+      activeDeadlineSeconds: 30 # 指定job运行的时间期限，超时将自动中止
+      backoffLimit: 6 # job失败后进行重试的次数
+      manualSelector: true # 是否可以使用selector选择器选择pod，默认是false
+      selector:
+        matchLabels:
+          app: jcronjob-busybox
+
+      #容器模板pc-ds
+      template:
+        metadata:
+          labels:
+            app: jcronjob-busybox
+        spec:
+          restartPolicy: Never # 从不重启
+          containers:
+            - name: contain-job-busybox-002
+              image: busybox:1.30
+              command: ["/bin/sh" , "-c" , "for i in 9 8 7 6 5 4 3 2 1 ; do echo $i ; sleep 2 ; done"]

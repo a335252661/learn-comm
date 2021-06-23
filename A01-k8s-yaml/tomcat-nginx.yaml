@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: # 元数据
+  name: nginx-deployment #ReplicaSet的名字
+  namespace: dev
+spec:
+  ##  当前deployment 的设置信息
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ingress-nginx-001
+  #容器模板
+  template:
+    metadata:
+      labels:
+        app: ingress-nginx-001
+    spec:
+      containers:
+        - name: ingress-container-nginx-001
+          image: nginx:1.17.1
+          ports:
+            - containerPort: 80
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata: # 元数据
+  name: tomcat-deployment #ReplicaSet的名字
+  namespace: dev
+spec:
+  ##  当前deployment 的设置信息
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ingress-tomcat-001
+  #容器模板
+  template:
+    metadata:
+      labels:
+        app: ingress-tomcat-001
+    spec:
+      containers:
+        - name: ingress-container-tomcat-001
+          image: library/tomcat:8.5-jre10-slim
+          ports:
+            - containerPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata: # 元数据
+  name: service-nginx
+  namespace: dev
+spec:
+  selector:
+    app: ingress-nginx-001 # pod的标签
+  clusterIP: Node
+  type: ClusterIP
+  ports:
+    - port: 80 # service的端口
+      targetPort: 80 # 目标pod的端口
+
+
+---
+apiVersion: v1
+kind: Service
+metadata: # 元数据
+  name: service-tomcat
+  namespace: dev
+spec:
+  selector:
+    app: ingress-tomcat-001 # pod的标签
+  clusterIP: Node
+  type: ClusterIP
+  ports:
+    - port: 8080 # service的端口
+      targetPort: 8080 # 目标pod的端口

@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: learn-sp-02-annotation
+
+#找不到testconsul 项目启动直接失败
+#1 启动参数添加 -Dspring.profiles.active=test   testconsul在值在 application-test.yaml 里面，使用 ${testconsul} 引用
+cld:
+#  getTest: ${testconsul}
+  getTest2: '嘻嘻哈哈'
