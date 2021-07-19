@@ -1,7 +1,6 @@
 package cn.cld.learnspannotation;
 
-import cn.cld.learnspannotation.annlearn.ConditionalLearn;
-import cn.cld.learnspannotation.annlearn.ConditionalLearn2;
+import cn.cld.learnspannotation.annlearn.conditional.ConditionalLearn2;
 import cn.cld.learnspannotation.bean.Person;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

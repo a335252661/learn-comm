@@ -1,11 +1,21 @@
 package cn.cld.learnspannotation.aspect;
 
+import cn.cld.learnspannotation.annotation.AppAuthenticationValidate;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.CodeSignature;
+import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.aop.support.AopUtils;
 import org.springframework.stereotype.Component;
+import org.yaml.snakeyaml.util.ArrayUtils;
+
+import java.lang.annotation.Annotation;
+
+import java.lang.reflect.Method;
+import java.util.Arrays;
 
 /**
  * @author 程刘德
@@ -24,17 +34,19 @@ public class AppAuthenticationValidateAspect {
     @Before(value = "pointcut()")
     public void fun(JoinPoint joinPoint) {
         System.out.println("----------Before");
-        Object[] args = joinPoint.getArgs();
 
-        String[] parameterNames = ((CodeSignature) joinPoint.getSignature()).getParameterNames();
+        // 获取切入点方法名
+        String methodName = joinPoint.getSignature().getName();
+        System.out.println("methodName---------"+methodName);
 
-        for (Object arg : args) {
-            System.out.println(arg);
 
-        }
+        // 获取方法上的注解参数
+        MethodSignature signature= (MethodSignature) joinPoint.getSignature();
+        AppAuthenticationValidate appAuthenticationValidate = signature.getMethod().getAnnotation(AppAuthenticationValidate.class);
+        String[] strings = appAuthenticationValidate.requestParams();
+        System.out.println(Arrays.asList(strings));
 
-        for (String parameterName : parameterNames) {
-            System.out.println(parameterName);
-        }
+
+
     }
 }

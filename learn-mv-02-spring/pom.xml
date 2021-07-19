@@ -10,12 +10,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>learn-mv-02-spring</artifactId>
-    <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-        </dependency>
-    </dependencies>
+    <groupId>cn.cld</groupId>
+    <version>0.0.1-SNAPSHOT</version>
+
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>study-mv-spring-01-ioc</module>
+        <module>study-mv-spring-02-hello</module>
+        <module>study-mv-spring-03-ann</module>
+        <module>study-mv-spring-04-proxy</module>
+    </modules>
 
 
 </project>

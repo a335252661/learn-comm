@@ -1,15 +1,12 @@
 package cn.cld.learnspannotation.controller;
 
-import cn.cld.learnspannotation.annlearn.ConditionalOnMissingBeanLearn;
 import cn.cld.learnspannotation.annlearn.ConfigurationPropertiesLearn;
 import cn.cld.learnspannotation.annotation.AppAuthenticationValidate;
 import cn.cld.learnspannotation.bean.Car;
 import cn.cld.learnspannotation.service.Fruit;
 import cn.hutool.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -63,8 +60,9 @@ public class HelloController {
     }
 
     @AppAuthenticationValidate(requestParams={"嘻嘻" ,"admin"})
+//    @AppAuthenticationValidate(value = "xixi")
     @RequestMapping("/hello2")
-    public String fun2(JSONObject jsonObject) {
+    public String fun2() {
         return "hello2";
     }
 

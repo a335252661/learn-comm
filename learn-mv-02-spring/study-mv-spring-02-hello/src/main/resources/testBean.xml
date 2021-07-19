@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!--使用Spring来创建对象，在Spring这些都称为Bean
+    类型 变量名 = new 类型();
+    Hello myhello = new Hello();
+
+    id = 变量名
+    class = new的对象
+    property 相当于给对象中的属性设置一个值！
+        -->
+    <bean id="myhello" class="Hello">
+        <property name="str" value="Spring"/>
+    </bean>
+
+
+
+<!--    自动装配  byName-->
+    <bean id="myRole222" class="beans.Role">
+        <property name="id" value="100222"></property>
+        <property name="name" value="管理员222"></property>
+    </bean>
+<!--    <bean id="myRole111333" class="beans.Role">-->
+<!--        <property name="id" value="100111"></property>-->
+<!--        <property name="name" value="管理员111"></property>-->
+<!--    </bean>-->
+    <bean id="userVo" class="beans.User" autowire="byName"></bean>
+
+
+    <!--    自动装配  byType-->
+<!--    <bean class="beans.Role">-->
+<!--        <property name="id" value="100111"></property>-->
+<!--        <property name="name" value="管理员111"></property>-->
+<!--    </bean>-->
+<!--    <bean id="person" class="beans2.Person" autowire="byType"></bean>-->
+
+</beans>

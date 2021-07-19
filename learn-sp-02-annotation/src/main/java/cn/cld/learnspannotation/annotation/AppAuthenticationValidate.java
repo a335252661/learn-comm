@@ -16,4 +16,7 @@ import java.lang.annotation.Target;
 public @interface AppAuthenticationValidate {
     //必填参数
     String[] requestParams() default {};
+
+    String value() default "默认";
+
 }

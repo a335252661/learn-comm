@@ -24,6 +24,7 @@
         <module>learn-mv-rabbitmq</module>
         <module>learn-mv-shiro</module>
         <module>learn-sp-01-test</module>
+        <module>learn-sp-01-test2</module>
         <module>learn-sp-02-annotation</module>
         <module>learn-sp-03-code</module>
         <module>learn-sp-04-jwt</module>
@@ -37,6 +38,7 @@
         <module>learn-sp-12-dmdb</module>
         <module>learn-sp-13-oracle</module>
         <module>learn-sp-14-manydatasources</module>
+        <module>learn-mv-02-spring</module>
     </modules>
 
     <properties>
