@@ -1,0 +1,1 @@
+nohup sh  /root/cld/89learn.sh &

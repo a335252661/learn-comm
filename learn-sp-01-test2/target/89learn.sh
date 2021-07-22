@@ -1,0 +1,1 @@
+java  -jar  /root/cld/learn-sp-01-test2-0.0.1-SNAPSHOT.jar

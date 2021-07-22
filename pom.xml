@@ -39,6 +39,7 @@
         <module>learn-sp-13-oracle</module>
         <module>learn-sp-14-manydatasources</module>
         <module>learn-mv-02-spring</module>
+        <module>study-mv-spring-0722</module>
     </modules>
 
     <properties>
