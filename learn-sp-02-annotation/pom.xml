@@ -53,6 +53,13 @@
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
+        <!--        导入自定义的配置类，先将配置start的项目打包，然后引入-->
+        <dependency>
+            <groupId>cn.cld</groupId>
+            <artifactId>learn-sp-18-start</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
     </dependencies>
 
     <build>

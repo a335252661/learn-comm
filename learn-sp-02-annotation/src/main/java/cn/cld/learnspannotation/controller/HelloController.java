@@ -1,5 +1,6 @@
 package cn.cld.learnspannotation.controller;
 
+import cn.cld.learnsp18start.config.CldTestConfiguration;
 import cn.cld.learnspannotation.annlearn.ConfigurationPropertiesLearn;
 import cn.cld.learnspannotation.annotation.AppAuthenticationValidate;
 import cn.cld.learnspannotation.bean.Car;
@@ -45,6 +46,10 @@ public class HelloController {
 
     @Autowired
     Fruit orangeTest01;
+
+
+    @Autowired
+    private CldTestConfiguration cldTestTemplate;
 
     //cld:
     //  getTest: ${testconsul}
@@ -103,6 +108,11 @@ public class HelloController {
     public String fun9() {
         fruit.color();
         return "fruit.color()";
+    }
+
+    @RequestMapping("/cldtest")
+    public String fun10() {
+        return cldTestTemplate.getName();
     }
 
 }
