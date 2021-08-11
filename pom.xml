@@ -39,6 +39,8 @@
         <module>learn-sp-13-oracle</module>
         <module>learn-sp-14-manydatasources</module>
         <module>learn-mv-02-spring</module>
+        <module>learn-mv-03-netty</module>
+        <module>learn-mv-00-help</module>
     </modules>
 
     <properties>
@@ -55,6 +57,26 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+
+<!--        google 的工具类合计-->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>19.0</version>
+        </dependency>
+<!--        日志打印-->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.9</version>
         </dependency>
     </dependencies>
 
