@@ -79,7 +79,7 @@ public class FileHelps {
     }
 
     // 拷贝文件夹，同时文件一起拷贝
-    public static void CopyDir(String dirFrom , String dirTo) {
+    public static void copyDir(String dirFrom , String dirTo) {
         long start = System.currentTimeMillis();
         String source = dirFrom;
         String target = dirTo;
@@ -220,7 +220,8 @@ public class FileHelps {
     public static void main(String[] args) {
 //        FileHelps.walkFileTree("C:\\clddata\\project\\other\\netty-demo");
         // C:\clddata\project\other\netty-demo - 副本
-        FileHelps.deleteDirForce("C:\\clddata\\project\\other\\netty-demo - 副本");
+//        FileHelps.deleteDirForce("C:\\clddata\\project\\other\\netty-demo - 副本");
+        FileHelps.copyDir("C:\\tmp\\CR_C82F9.tmp" , "C:\\tmp\\CR_C82F9.tmp222");
     }
 
 }
