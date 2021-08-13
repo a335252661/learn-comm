@@ -141,7 +141,7 @@ public class ByteBufferUtil {
 //                dump.append(getUnsignedByte2(buf, j));
 //            }
 
-            buf.flip();
+//            buf.flip();
             dump.append(StandardCharsets.UTF_8.decode(buf).toString());
 
             dump.append('|');
