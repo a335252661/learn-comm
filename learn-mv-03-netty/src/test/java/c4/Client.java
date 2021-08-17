@@ -20,9 +20,10 @@ public class Client {
 //            SocketAddress address = sc.getLocalAddress();
 
 //            sc.write(Charset.defaultCharset().encode("hello"));
-//            sc.write(Charset.defaultCharset().encode("hello\nxixi\n"));
+            sc.write(Charset.defaultCharset().encode("hello\nxixi\n"));
 //            sc.write(Charset.defaultCharset().encode("中国"));//展示乱码问题
-            sc.write(Charset.defaultCharset().encode("0123456789abcdef33333\n"));
+//            sc.write(Charset.defaultCharset().encode("0123456789abcdef33333\n"));
+//            sc.write(Charset.defaultCharset().encode("0123\n"));
 //            System.out.println("waiting...");
             System.in.read();
         sc.close();
